@@ -30,13 +30,13 @@ https://farrel-rifqi-footballshop.pbp.cs.ui.ac.id/
 2. Mengatur settings.py untuk memberi akses
 3. Mengatur environment pada PWS
 
-# Bagan request client ke web
+## Bagan request client ke web
 HTTP Request > urls.py > views.py > models.py > main.html > views.py > HTTP Response
 
-# Peran settings.py
+## Peran settings.py
 settings.py berperan untuk mengatur DATABASES, INSTALLED_APPS, MIDDLEWARE, dan ALLOWED_HOSTS.
 
-# Cara kerja migrasi database di django
+## Cara kerja migrasi database di django
 1. Django membuat file migrasi setelah membaca perubahan di models.py
    ```bash
    python manage.py makemigrations
