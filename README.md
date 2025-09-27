@@ -86,11 +86,14 @@ menambah routing url xml, json dll pada urlpatterns di urls.py
 2. Update views.py dengan func show_product()
 3. Routing url pada urls.py
 ### Mengakses 4 URL dengan Postman
-
-
-
+![show_xml()](images/ti3_get_xml.jpg)
+![show_json()](images/ti3_get_json.jpg)
+![show_xml_by_id()](images/ti3_get_xml_id.jpg)
+![show_json_by_id()](images/ti3_get_json_id.jpg)
 ### Github
 ```bash
+python manage.py makemigrations
+python mange.py migrate
 git add .
 git commit Tugas 3
 git push pws master`
