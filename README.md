@@ -53,12 +53,14 @@ Tutorial sudah sangat lengkap, bahkan untuk setiap contoh sudah terdapat penjela
 
 # Tugas 3
 ## Alasannya diperlukan data delivery dalam pengimplementasian sebuah platform
-
+Data yang dikirim bisa dibatasi agar tidak semua informasi terbuka ke publik.
 ## XML vs JSON, dan alasan JSON lebih populer
-
+Menurut saya, JSON lebih baik karena penggunaan sintaks yang lebih dapat dibaca. 
+Alasannya, JSON lebih ringkas dibandingkan XML yang menggunakan banyak tag. Sehingga, biasanya ukuran XML lebih besar dibandingkan JSON. 
 ## Fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut
-
+Agar data yang diisi sesuai ketentuan form. Kita membutuhkan metode ini untuk mencegah data berbahaya yang bisa masuk ke database.
 ## Alasannya dibutuhkan csrf_token saat membuat form di Django
+Untuk mencegah penyerangan melalui metode POST request. Jika token mismatch, Django akan mereturn 403 Forbidden.
 
 ## Implementasi checklist step-by-step
 ### Menambah 4 fungsi views baru (XML, JSON)
