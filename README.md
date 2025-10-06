@@ -107,3 +107,69 @@ git push pws master`
 ```
 ## Feedback untuk Asdos Tutorial 2
 Asdos membantu ketika saya kewalahan. Salut!
+
+# Tugas 4
+## Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
+AuthenticationForm merupakan form dari Django yang dipakai untuk user auth (user, pass).
+AuthenticationForm berasal dari:
+```python
+from django.contrib.auth.forms import AuthenticationForm
+```
+Fungsi utama AuthenticationForm adalah menyediakan field, mengecek validasi user & pass, dan mengecek apakah user yang login aktif di db (is_active=True).
+Kelebihan:
+- Django memverifikasi user dan pass dengan aman (automatic validation)
+- Terintegrasi penuh dengan sistem autentikasi Django
+- Mudah dikustomisasi (custom field, error message, dll.)
+Kekurangan:
+- Terbatas hanya pada user dan pass (Tidak ada email, no. hp, dsb.)
+- Tampilan standar HTML (harus ada css/js untuk custom styling)
+- Tidak ada 2FA
+## Apa perbedaan antara autentikasi dan otorisasi? Bagaiamana Django mengimplementasikan kedua konsep tersebut?
+Autentikasi: verify user identity
+Otorisasi: determine user access
+Implementasi:
+- Autentikasi:
+   - `AuthenticationForm` digunakan dari untuk validasi username dan password
+- Otorisasi:
+   - `@login_required`: user sudah login
+   - `@permission_required`: user punya custom perms
+## Apa saja kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?
+Session: Higher security karena data disimpan di server (bukan client), tapi jika user banyak maka server terbebani.
+Cookies: Data langsung disimpan di browser user (agar cepat), tapi rentan terhadap cookie theft, xss, dan hanya ber-size 4KB.
+## Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai? Bagaimana Django menangani hal tersebut?
+Tidak sepenuhnya aman secara default, karena cookies dapat menjadi target jika tidak dilindungi dengan benar. 
+Django menangani hal ini dengan berbagai mekanisme keamanan, seperti:
+- SESSION_COOKIE_HTTPONLY = True: cookie tidak bisa dibaca oleh JavaScript
+- SESSION_COOKIE_SECURE = True: cookie hanya dikirim melalui HTTPS
+- CSRF_COOKIE_SECURE, CSRF_COOKIE_HTTPONLY: perlindungan tambahan terhadap serangan CSRF
+## Implementasi Checklist
+### Mengimplementasikan fungsi registrasi, login, dan logout untuk memungkinkan pengguna mengakses aplikasi sebelumnya sesuai dengan status login/logoutnya.
+- tambahkan fungsi register(), login_user(), logout_user() pada views.py
+- buat register.html, login.html (JANGAN LUPA EXTEND!!!!!)
+- routing url
+- @login_required pada show_main() dan show_product()
+- slight edit main.html untuk logout button
+###  Membuat dua (2) akun pengguna dengan masing-masing tiga (3) dummy data menggunakan model yang telah dibuat sebelumnya untuk setiap akun di lokal.
+- user: sigmalokal1/sigmalokal2
+- pass: redacted obviously
+- register dan login sukses
+- ada tiga produk pada masing masing akun (p.s. logout sukses)
+### Menghubungkan model Product dengan User.
+- tambahkan var user pada class Product pada models.py
+- connect create_product() ke user yang sesuai
+- filtering all/user products pada show_main()
+- filter button pada main.html
+- show pembuat product pada product_details.html
+### Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last_login pada halaman utama aplikasi.
+- login_user() pada views.py dengan sistem Django
+- cookie juga ditambahkan. (refer to 'if form.is_valid()' line 94)
+- show_main() menampilkan status user (last_login pada context)
+- main.html menampilkan last logged in
+- delete cookie pada logout_user()
+### Melakukan add-commit-push ke GitHub.
+```bash
+python manage.py makemigrations
+python manage.py migrate
+git add .
+git commit "TI4"
+git push 
