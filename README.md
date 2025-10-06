@@ -171,5 +171,7 @@ Django menangani hal ini dengan berbagai mekanisme keamanan, seperti:
 python manage.py makemigrations
 python manage.py migrate
 git add .
-git commit "TI4"
-git push 
+git commit "TI4 - hopefully no bugs this time"
+git push origin master
+git push pws master
+```
