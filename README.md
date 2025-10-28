@@ -175,3 +175,61 @@ git commit "TI4 - hopefully no bugs this time"
 git push origin master
 git push pws master
 ```
+
+# Tugas 5
+## Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Urutan dari paling tinggi ke rendah:
+!important
+Inline style (style="color: red;")
+Selector ID (#id)
+Selector class, attribute, pseudo-class (.btn { color: red; })
+Selector elemen/tag (div)
+
+Dalam CSS, ketika suatu elemen HTML mempunyai beberapa selector yang menerapkan aturan berbeda, browser akan menentukan aturan mana yang paling spesifik untuk diterapkan. Inline style memiliki prioritas tertinggi, diikuti oleh selector ID, kemudian selector class, attribute, dan pseudo-class, dan kemudian disusul oleh selector elemen/tag. Jika terdapat dua aturan dengan tingkat spesifisitas yang sama, aturan yang ditulis paling akhir dalam stylesheet akan menang, sesuai prinsip cascading yang menjadi dasar CSS.
+
+## Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+Responsive design penting dalam web app development karena perangkat yang digunakan user beragam, mulai dari layar kecil seperti ponsel hingga monitor beresolusi tinggi. Dengan responsive design, interface dan site placement dapat menyesuaikan ukuran layar secara otomatis. Sebagai contoh, situs besar seperti YouTube dan Instagram telah menerapkan responsive design, agar user bisa mengunjungi situs tersebut dimanapun dan kapanpun. Adapun situs yang belum menerapkan responsive design, seperti beberapa situs pemerintah, misalnya BPJT Tarif Tol https://tarif.wst.co.id/. Ini mungkin terjadi karena kurangnya dana dan sumber daya manusia.
+
+## Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Margin adalah ruang di luar batas elemen yang berfungsi memberi **jarak antar elemen** lain di sekitarnya. Border merupakan **garis** atau bingkai yang mengelilingi elemen dan berada di antara margin dan padding. Padding adalah ruang di dalam elemen yang **memisahkan konten dari border**.
+
+Cara implementasi:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.box {
+  margin: 10px;
+  border: 2px;
+  padding: 5px;
+}
+</style>
+</head>
+<body>
+  <div class="box">hai</div>
+</body>
+</html>
+```
+
+## Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+Flexbox (Flexible Box Layout) dirancang untuk mengatur elemen dalam satu dimensi, baik dalam bentuk baris (row) maupun kolo (column). Elemen anak (disebut flex items) secara otomatis menyesuaikan dengan ukuran ruang yang disediakan oleh flexbox. Flexbox berguna untuk layout yang bersifat linear seperti navbar, menu, dan lainnya.
+
+Grid layout dirancang untuk layout dua dimensi yaitu baris dan kolom sekaligus. Oleh karena ituu, grid layout lebih presisi dibanding flexbox untuk membuat struktur halaman yang lebih kompleks. Grid layout berguna untuk membuat layout halaman secara keseluruhan (header, sidebar, content, dan footer) seperti dashboard, layout halaman utama, dan lainnya.
+
+Flexbox dirancang untuk mengatur elemen secara fleksibel dalam satu dimensi, baik secara horizontal maupun vertikal. Flexbox sangat berguna untuk membuat alignment dan distribusi ruang antar elemen menjadi lebih mudah dan responsif, terutama pada struktur seperti navbar, menu, atau tombol yang harus sejajar secara dinamis.
+
+Sementara itu, grid layout memungkinkan pengaturan baik dalam baris maupun kolom. Grid layout berguna untuk membangun layout rumit, misalnya header, footer, sidebar, dll. pada dashboard aplikasi modern.
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+1. Add Tailwind at base.html
+2. Add edit_product() at views.py, url routing
+3. Create new edit_product.html on /main/template
+4. Add edit hyplink to main.html (ONLY FOR AUTH USERS ONLY!!!!)
+5. Add delete_product() at views.py, url routing
+6. Add delete hyplink to main.html
+7. Add middleware Whitenoise and config static file to settings.py
+8. STYLING CSS!! static/css/global.css
+9. Edit base.html to use css
+10. New card_product.html and navbar.html (on root)
+11. Styling every html page possible (except for base)
