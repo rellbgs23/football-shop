@@ -17,7 +17,7 @@
         <!-- title -->
         <h3 class="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors line-clamp-2">
             <a href="{% url 'main:show_product' product.id %}">
-                {{ product.title }}
+                {{ product.name }}
             </a>
         </h3>
 
@@ -35,7 +35,7 @@
 
         <!-- content preview -->
         <p class="text-gray-600 text-sm mt-3 line-clamp-3">
-            {{ product.content|truncatewords:20 }}
+            {{ product.description|truncatewords:20 }}
         </p>
 
         <!-- action footer -->
