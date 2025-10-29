@@ -12,9 +12,7 @@
           <a href="/" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
             Home
           </a>
-          <a href="{% url 'main:create_product' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
-            Create Product
-          </a>
+          <!-- Create Product link removed (creation via AJAX modal only) -->
         </div>
         
         <!-- Desktop User Section -->
@@ -24,16 +22,32 @@
               <div class="text-sm font-medium text-gray-900">{{ name|default:user.username }}</div>
               <div class="text-xs text-gray-500">{{ npm|default:"Student" }} - {{ class|default:"Class" }}</div>
             </div>
-            <a href="{% url 'main:logout' %}" class="text-red-600 hover:text-red-700 font-medium transition-colors">
+            <button onclick="handleLogout()" class="text-red-600 hover:text-red-700 font-medium transition-colors bg-transparent border-0">
               Logout
-            </a>
+            </button>
+            <script>
+              async function handleLogout() {
+                try {
+                  const resp = await fetch('{% url "main:logout" %}', {
+                    headers: {
+                      'X-Requested-With': 'XMLHttpRequest',
+                      'X-CSRFToken': getCookie('csrftoken')
+                    }
+                  });
+                  if (resp.ok) {
+                    const data = await resp.json();
+                    showToast('Logged out successfully', '', 'success');
+                    if (data && data.redirect) window.location.href = data.redirect;
+                    else window.location.reload();
+                  }
+                } catch (err) {
+                  console.error(err);
+                  window.location.href = '{% url "main:logout" %}';
+                }
+              }
+            </script>
           {% else %}
-            <a href="{% url 'main:login' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">
-              Login
-            </a>
-            <a href="{% url 'main:register' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium transition-colors">
-              Register
-            </a>
+            <button onclick="showLoginModal()" class="text-gray-600 hover:text-gray-900 font-medium transition-colors bg-transparent border-0">Login</button>
           {% endif %}
         </div>
         
@@ -57,9 +71,6 @@
         <div class="space-y-1">
           <a href="/" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">
             Home
-          </a>
-          <a href="{% url 'main:create_product' %}" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">
-            Create Product
           </a>
         </div>
         

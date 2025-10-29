@@ -1,0 +1,443 @@
+<!-- Modal -->
+<div id="crudModal" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+  <div id="crudModalContent" class="bg-white rounded-lg shadow-lg w-5/6 sm:w-3/5 md:w-1/2 lg:w-2/5 xl:w-1/3 max-h-screen overflow-y-auto">
+    <!-- Modal header -->
+    <div class="flex items-center justify-between p-4 border-b">
+      <div>
+        <h3 class="text-xl font-semibold text-gray-900">
+          Create New Product
+        </h3>
+        <p class="text-sm text-gray-600 mt-1">ayo bikin baru</p>
+      </div>
+      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="hideModal()">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+    <!-- Modal body -->
+    <div class="px-6 py-4 space-y-6 form-style">
+      <form id="productForm">
+        <!-- hidden id used to switch between create and update -->
+        <input type="hidden" id="product_id" name="product_id" value="">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+          <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Enter product name" required>
+        </div>
+        <div class="mb-4">
+          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea id="description" name="description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Enter product description" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+          <input type="number" id="price" name="price" min="0" step="1" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Enter price" required>
+        </div>
+        <div class="mb-4">
+          <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+          <select id="category" name="category" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" required>
+            <option value="">Choose a category</option>
+            <option value="bola basket">Bola Basket</option>
+            <option value="bola tenis">Bola Tenis</option>
+            <option value="bola ping-pong">Bola Ping-pong</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="thumbnail" class="block text-sm font-medium text-gray-700">Thumbnail URL</label>
+          <input type="url" id="thumbnail" name="thumbnail" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" placeholder="https://example.com/image.jpg">
+        </div>
+        <div class="mb-4">
+          <div class="flex items-center">
+            <input id="is_featured" name="is_featured" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded">
+            <label for="is_featured" class="ml-2 text-sm font-medium text-gray-900">Featured Products</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- Modal footer -->
+    <div class="flex flex-col sm:flex-row gap-4 p-6 border-t border-gray-200 rounded-b">
+      <button type="button" id="cancelButton" class="order-2 sm:order-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-md font-medium hover:bg-gray-50 transition-colors text-center" onclick="hideModal()">Cancel</button>
+      <button type="submit" id="submitProduct" form="productForm" class="order-1 sm:order-2 flex-1 bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors">Publish Product</button>
+    </div>
+  </div>
+</div>
+
+    <!-- Read Modal -->
+    <div id="readModal" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <div id="readModalContent" class="bg-white rounded-lg shadow-lg w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5 max-h-screen overflow-y-auto opacity-0 scale-95 transition-transform duration-150">
+        <div class="flex items-center justify-between p-4 border-b">
+          <div>
+            <h3 id="read-title" class="text-xl font-semibold text-gray-900">Product name</h3>
+            <p id="read-category" class="text-sm text-gray-500">Category</p>
+          </div>
+          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="hideReadModal()">
+            <span class="sr-only">Close</span>
+            ✕
+          </button>
+        </div>
+        <div class="p-6 sm:p-8">
+          <img id="read-image" src="" alt="" class="w-full h-64 object-cover rounded-md mb-4 hidden">
+          <p id="read-price" class="text-2xl font-bold text-blue-600 mb-4">Rp 0</p>
+          <div id="read-description" class="prose prose-lg text-gray-700 whitespace-pre-line mb-4">Description</div>
+          <p id="read-author" class="text-sm text-gray-500"></p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <div id="deleteModalContent" class="bg-white rounded-lg shadow-lg w-96 max-h-screen overflow-y-auto opacity-0 scale-95 transition-transform duration-150">
+        <div class="p-4 border-b flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-gray-900">Delete Product</h3>
+          <button class="text-gray-400 hover:text-gray-600" onclick="hideDeleteModal()">✕</button>
+        </div>
+        <div class="p-6">
+          <p class="text-gray-700 mb-4">Are you sure you want to delete this product? This action cannot be undone.</p>
+          <input type="hidden" id="delete-product-id" value="">
+          <div class="flex justify-end space-x-3">
+            <button onclick="hideDeleteModal()" class="px-4 py-2 text-gray-700 border border-gray-300 rounded hover:bg-gray-50">Cancel</button>
+            <button onclick="confirmDelete()" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+  function showModal() {
+      const modal = document.getElementById('crudModal');
+      const modalContent = document.getElementById('crudModalContent');
+
+      // reset to create mode by default
+      document.getElementById('productForm').reset();
+      document.getElementById('product_id').value = '';
+      document.querySelector('#crudModal h3').textContent = 'Create New Product';
+
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modalContent.classList.remove('opacity-0', 'scale-95');
+        modalContent.classList.add('opacity-100', 'scale-100');
+      }, 50);
+  }
+
+  /* ----------------------------- Read-only Modal ----------------------------- */
+  // A separate modal to show product details fetched via AJAX
+  function showReadModal() {
+    const modal = document.getElementById('readModal');
+    const modalContent = document.getElementById('readModalContent');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modalContent.classList.remove('opacity-0', 'scale-95');
+      modalContent.classList.add('opacity-100', 'scale-100');
+    }, 50);
+  }
+
+  function hideReadModal() {
+    const modal = document.getElementById('readModal');
+    const modalContent = document.getElementById('readModalContent');
+    modalContent.classList.remove('opacity-100', 'scale-100');
+    modalContent.classList.add('opacity-0', 'scale-95');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 150);
+  }
+
+  function openReadModal(product) {
+    // populate read modal elements
+    document.getElementById('read-title').textContent = product.name || '';
+    document.getElementById('read-price').textContent = product.price != null ? 'Rp ' + Number(product.price).toLocaleString('id-ID') : '';
+    document.getElementById('read-category').textContent = product.category || '';
+        document.getElementById('read-author').textContent = product.user_username ? `Posted by: ${product.user_username}` : '';
+    showReadModal();
+  }
+
+  // Delete modal helpers
+  function showDeleteModal(productId) {
+    document.getElementById('delete-product-id').value = productId;
+    const modal = document.getElementById('deleteModal');
+    const content = document.getElementById('deleteModalContent');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      content.classList.remove('opacity-0', 'scale-95');
+      content.classList.add('opacity-100', 'scale-100');
+    }, 50);
+  }
+
+  function hideDeleteModal() {
+    const modal = document.getElementById('deleteModal');
+    const content = document.getElementById('deleteModalContent');
+    content.classList.remove('opacity-100', 'scale-100');
+    content.classList.add('opacity-0', 'scale-95');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      document.getElementById('delete-product-id').value = '';
+    }, 150);
+  }
+
+  async function confirmDelete() {
+    const productId = document.getElementById('delete-product-id').value;
+    if (!productId) return;
+    
+    try {
+      const resp = await fetch(`{% url 'main:delete_product' '00000000-0000-0000-0000-000000000000' %}`.replace('00000000-0000-0000-0000-000000000000', productId), {
+        method: 'DELETE',
+        headers: {
+          'X-CSRFToken': getCookie('csrftoken'),
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+
+      if (resp.ok) {
+        hideDeleteModal();
+        showToast('Product deleted successfully', '', 'success');
+        fetchProductFromServer(); // refresh the list
+      } else {
+        showToast('Failed to delete product', 'Please try again', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Error deleting product', 'Please try again', 'error');
+    }
+  }
+
+  function hideModal() {
+    const img = document.getElementById('read-image');
+    if (product.thumbnail) {
+      img.src = product.thumbnail;
+      img.classList.remove('hidden');
+    } else {
+      img.classList.add('hidden');
+    }
+    document.getElementById('read-description').textContent = product.description || '';
+    showReadModal();
+  }
+
+
+  function hideModal() {
+      const modal = document.getElementById('crudModal');
+      const modalContent = document.getElementById('crudModalContent');
+
+      modalContent.classList.remove('opacity-100', 'scale-100');
+      modalContent.classList.add('opacity-0', 'scale-95');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 150); 
+  }
+
+  async function submitProductEntry() {
+    const formEl = document.querySelector('#productForm');
+    const fd = new FormData(formEl);
+
+    // determine endpoint: create vs update
+    const productId = fd.get('product_id');
+    const isUpdate = productId && productId.trim() !== '';
+    const endpoint = isUpdate ? "{% url 'main:update_product_entry_ajax' %}" : "{% url 'main:add_product_entry_ajax' %}";
+
+    const resp = await fetch(endpoint, {
+      method: 'POST',
+      body: fd,
+    });
+
+    if (!resp.ok) {
+      showToast('Operation failed', 'Please try again', 'error');
+      return false;
+    }
+
+    // Reset form and close modal
+    formEl.reset();
+    document.getElementById('product_id').value = '';
+    hideModal();
+
+    if (isUpdate) {
+      showToast('Product updated successfully!', '', 'success');
+      document.dispatchEvent(new CustomEvent('productUpdated'));
+    } else {
+      showToast('Product added successfully!', '', 'success');
+      document.dispatchEvent(new CustomEvent('productAdded'));
+    }
+
+    return false;
+  }
+
+  document.getElementById("productForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    submitProductEntry();
+  });
+
+  // open edit modal and populate fields from given product data
+  function openEditModal(productData) {
+    // productData is an object with id, name, description, price, category, thumbnail, is_featured
+    showModal();
+    document.querySelector('#crudModal h3').textContent = 'Edit Product';
+    document.getElementById('product_id').value = productData.id || '';
+    document.getElementById('name').value = productData.name || '';
+    document.getElementById('description').value = productData.description || '';
+    document.getElementById('price').value = productData.price || '';
+    document.getElementById('category').value = productData.category || '';
+    document.getElementById('thumbnail').value = productData.thumbnail || '';
+    document.getElementById('is_featured').checked = !!productData.is_featured;
+  }
+</script>
+<!-- Login & Register Modals -->
+<div id="loginModal" class="hidden fixed inset-0 z-60 w-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+  <div id="loginModalContent" class="bg-white rounded-lg shadow-lg w-11/12 sm:w-96 max-h-screen overflow-y-auto opacity-0 scale-95 transition-transform duration-150">
+    <div class="p-4 border-b flex items-center justify-between">
+      <h3 class="text-lg font-semibold">Sign In</h3>
+      <button class="text-gray-400" onclick="hideLoginModal()">✕</button>
+    </div>
+    <div class="p-6">
+      <form id="loginForm">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Username</label>
+          <input name="username" id="login-username" required class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" />
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Password</label>
+          <input name="password" id="login-password" type="password" required class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" />
+        </div>
+        <div class="flex items-center justify-between">
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Sign In</button>
+          <button type="button" class="text-sm text-gray-500" onclick="openRegisterFromLogin()">Register Now</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="registerModal" class="hidden fixed inset-0 z-60 w-full flex items-center justify-center bg-gray-800 bg-opacity-50">
+  <div id="registerModalContent" class="bg-white rounded-lg shadow-lg w-11/12 sm:w-96 max-h-screen overflow-y-auto opacity-0 scale-95 transition-transform duration-150">
+    <div class="p-4 border-b flex items-center justify-between">
+      <h3 class="text-lg font-semibold">Register</h3>
+      <button class="text-gray-400" onclick="hideRegisterModal()">✕</button>
+    </div>
+    <div class="p-6">
+      <form id="registerForm">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Username</label>
+          <input name="username" id="reg-username" required class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" />
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Password</label>
+          <input name="password1" id="reg-password1" type="password" required class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" />
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
+          <input name="password2" id="reg-password2" type="password" required class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2" />
+        </div>
+        <div class="flex items-center justify-end">
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // CSRF helper
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  // Login modal helpers
+  function showLoginModal() {
+    const modal = document.getElementById('loginModal');
+    const content = document.getElementById('loginModalContent');
+    modal.classList.remove('hidden');
+    setTimeout(() => { content.classList.remove('opacity-0','scale-95'); content.classList.add('opacity-100','scale-100'); }, 50);
+  }
+  function hideLoginModal() {
+    const modal = document.getElementById('loginModal');
+    const content = document.getElementById('loginModalContent');
+    content.classList.remove('opacity-100','scale-100'); content.classList.add('opacity-0','scale-95');
+    setTimeout(() => { modal.classList.add('hidden'); }, 150);
+  }
+
+  // Register modal helpers
+  function showRegisterModal() {
+    const modal = document.getElementById('registerModal');
+    const content = document.getElementById('registerModalContent');
+    modal.classList.remove('hidden');
+    setTimeout(() => { content.classList.remove('opacity-0','scale-95'); content.classList.add('opacity-100','scale-100'); }, 50);
+  }
+  function hideRegisterModal() {
+    const modal = document.getElementById('registerModal');
+    const content = document.getElementById('registerModalContent');
+    content.classList.remove('opacity-100','scale-100'); content.classList.add('opacity-0','scale-95');
+    setTimeout(() => { modal.classList.add('hidden'); }, 150);
+  }
+
+  function openRegisterFromLogin() {
+    hideLoginModal();
+    setTimeout(() => { showRegisterModal(); }, 180);
+  }
+
+  // Submit handlers
+  document.getElementById('loginForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const fd = new FormData(this);
+    try {
+      const resp = await fetch('{% url "main:login" %}', {
+        method: 'POST',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: fd
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        showToast('Login successful','', 'success');
+        // redirect or reload
+        if (data && data.redirect) window.location.href = data.redirect;
+        else window.location.reload();
+      } else {
+        const data = await resp.json().catch(()=>({}));
+        const msg = data && data.errors ? Object.values(data.errors).flat().join(' ; ') : 'Login failed';
+        showToast('Login failed', msg, 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Login error','Please try again','error');
+    }
+  });
+
+  document.getElementById('registerForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const fd = new FormData(this);
+    try {
+      const resp = await fetch('{% url "main:register" %}', {
+        method: 'POST',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: fd
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        hideRegisterModal();
+        showToast('Registration successful','Please sign in','success');
+        // open login modal afterwards
+        setTimeout(()=>{ showLoginModal(); }, 400);
+      } else {
+        const data = await resp.json().catch(()=>({}));
+        const msg = data && data.errors ? Object.values(data.errors).flat().join(' ; ') : 'Registration failed';
+        showToast('Registration failed', msg, 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Registration error','Please try again','error');
+    }
+  });
+</script>

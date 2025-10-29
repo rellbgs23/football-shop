@@ -233,3 +233,37 @@ Sementara itu, grid layout memungkinkan pengaturan baik dalam baris maupun kolom
 9. Edit base.html to use css
 10. New card_product.html and navbar.html (on root)
 11. Styling every html page possible (except for base)
+
+# Tugas 6
+## Apa perbedaan antara synchronous request dan asynchronous request?
+Synchronous request -> halaman akan stop responding sampai server memberikan jawaban, sehingga pengguna harus menunggu proses selesai sebelum dapat berinteraksi kembali dengan halaman.
+
+Asynchronous request -> halaman tetap responsif karena request diproses di backend tanpa menghentikan user interaction, dan hasil dari server muncul ketika sudah diterima (e.g. JS).
+
+Perbedaan utama terletak pada pengalaman pengguna, di mana asynchronous request jauh lebih efisien dan interaktif dibandingkan synchronous request.
+
+## Bagaimana AJAX bekerja di Django (alur request–response)?
+AJAX kirim request dari JavaScript ke URL endpoint (urls.py), views.py proses data tsb. melalui GET/POST, views.py mungkin juga akan mengakses database, views.py return response JSON atau partial HTML. Browser user menerima response ini menggunakan callback atau promise untuk memperbarui sebagian halaman tanpa melakukan reload penuh.
+
+Dengan demikian, AJAX di Django tetap mengikuti pola request–response HTTP, hanya saja penanganan interface dilakukan secara dinamis di sisi browser.
+
+## Apa keuntungan menggunakan AJAX dibandingkan render biasa di Django?
+Keuntungan menggunakan AJAX dibandingkan render biasa di Django adalah kemampuan untuk memperbarui bagian tertentu dari tampilan halaman tanpa harus me-refresh seluruh halaman, sehingga kinerja aplikasi meningkat dan beban server serta bandwidth lebih efisien karena data yang ditransfer lebih sedikit. Selain itu, interaksi pengguna terasa lebih halus dan real-time, cocok untuk fitur seperti pencarian instan, voting, notifikasi, atau validasi form langsung. Render biasa membuat proses tampak lebih lambat karena server harus mengirim ulang seluruh halaman setiap kali ada perubahan kecil.
+
+## Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
+Keamanan dalam penggunaan AJAX untuk Login dan Register di Django harus diperhatikan dengan serius. Pengembang perlu memastikan bahwa request AJAX dilindungi CSRF token bawaan Django untuk mencegah serangan cross-site request forgery. Data sensitif seperti password harus dikirim melalui protokol HTTPS agar terenkripsi selama transmisi. Django tetap harus melakukan validasi dan sanitasi data di sisi server meskipun sudah dilakukan validasi di sisi client. Selain itu, response yang diberikan juga tidak boleh mengungkapkan informasi yang dapat dimanfaatkan penyerang, misalnya pesan error yang terlalu detail pada proses otentikasi.
+
+## Bagaimana AJAX mempengaruhi pengalaman pengguna (User Experience) pada website?
+AJAX memberi dampak positif yang signifikan terhadap pengalaman pengguna karena interaksi menjadi lebih cepat, langsung, dan tidak mengganggu alur penggunaan halaman. Pengguna tidak perlu melihat halaman berkedip atau reload hanya untuk melakukan aksi kecil, sehingga tampilan aplikasi terasa lebih modern dan reaktif seperti aplikasi desktop. Quick response ini meningkatkan kepuasan pengguna dan menjaga mereka tetap fokus pada tugas yang sedang dilakukan, yang pada akhirnya memperbaiki keseluruhan User Experience pada website.
+
+## Implementasi Checklist (help)
+### Mengubah fitur - fitur tugas sebelumnya menggunakan AJAX
+1. Fitur CRUD (Create Read Update Delete) product menggunakan AJAX (tidak boleh menggunakan dari context render kecuali untuk keperluan AJAX) CHECK
+2. Mengubah Login dan Register menggunakan AJAX. CHECK
+### Tampilan baru
+1. Membuat tombol yang akan menampilkan modal untuk create dan update product dalam bentuk form. CHECK
+2. Membuat modal konfirmasi saat pengguna ingin menghapus product. CHECK
+3. Saat melakukan aksi dari modal, product akan di-refresh tanpa perlu melakukan reload halaman (Refresh melalui browser). CHECK
+4. Membuat tombol refresh yang akan menampilkan list product terbaru tanpa perlu reload halaman (Refresh melalui browser). CHECK
+5. Membuat Loading, Empty, dan Error state melalui Javascript. CHECK
+6. Menampilkan Toast saat create, update, atau delete product dan saat login, logout, dan register. man..

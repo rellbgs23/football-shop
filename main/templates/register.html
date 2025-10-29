@@ -115,3 +115,58 @@
   </div>
 </div>
 {% endblock content %}
+
+      {% block scripts %}
+      <script>
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+      (function() {
+        const form = document.querySelector('form');
+        if (!form) return;
+        form.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const fd = new FormData(form);
+          try {
+            const resp = await fetch(window.location.pathname, {
+              method: 'POST',
+              headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': getCookie('csrftoken')
+              },
+              body: fd
+            });
+
+            if (resp.ok) {
+              const data = await resp.json();
+              showToast('Registration successful', '', 'success');
+              if (data && data.redirect) {
+                window.location.href = data.redirect;
+              } else {
+                window.location.href = '{% url "main:login" %}';
+              }
+            } else {
+              const data = await resp.json().catch(() => ({}));
+              const msg = (data && data.errors) ? Object.values(data.errors).flat().join(' ; ') : 'Registration failed';
+              showToast('Registration failed', msg, 'error');
+            }
+          } catch (err) {
+            console.error(err);
+            showToast('Registration error', 'Please try again', 'error');
+          }
+        });
+      })();
+      </script>
+      {% endblock scripts %}
